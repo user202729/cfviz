@@ -32,7 +32,7 @@ $(document).ready(function() {
     penalty = $('#penalty').val().trim();
     userHandle = $('#handle').val().trim();
 
-    if(!(newContestId && rating && points)) {
+    if(!(newContestId && (rating || userHandle) && points)) {
       err_message('contestIdDiv', 'All fields required');
       return;
     }
@@ -101,6 +101,9 @@ function refresh() {
     err_message('handleDiv', 'User did not participate in contest')
     return
   }
+
+  if (!rating)
+    rating = ratingsDict[userHandle];
 
   for (var i = 0; i < handles.length; i++) {
     ratings[i] = handles[i] in ratingsDict ? ratingsDict[handles[i]] : rating;
