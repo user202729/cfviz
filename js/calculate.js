@@ -1,3 +1,5 @@
+'use strict';
+
 function getEloWinProbability(ra, rb) {
   return 1.0 / (1.0 + Math.pow(10.0, (rb - ra) / 400.0));
 }

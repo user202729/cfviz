@@ -1,3 +1,5 @@
+'use strict';
+
 // Virtual rating change
 
 var api_url = "https://codeforces.com/api/";
