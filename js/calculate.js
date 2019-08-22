@@ -105,3 +105,20 @@ function CalculateRatingChanges(previousRatings, standingsRows, userId) {
   }
   return contestants.content;
 }
+
+
+function rl(){
+  var x=document.createElement('script')
+  x.src='js/calculate.js'
+  document.body.appendChild(x)
+  document.body.removeChild(x)
+}
+
+function ts(x){
+  handleDiv.children[0].value=x;
+  ratingDiv.children[0].value=ratingsDict[x]
+  pointsDiv.children[0].value=rows.find(y=>y.party.members[0].handle==x).points
+  var results = CalculateRatingChanges(ratings, places, handles);
+  showResult(results);
+  // console.log(cd[x],cd[x]-ratingsDict[x])
+}
