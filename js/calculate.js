@@ -4,6 +4,13 @@ function getEloWinProbability(ra, rb) {
   return 1.0 / (1.0 + Math.pow(10.0, (rb - ra) / 400.0));
 }
 
+/**
+ * Compute the expected rank of user A assuming A and all users in contestants
+ * compete in a contest and A has rating = rating.
+ *
+ * If A is included in contestants (at index i), then subtract
+ * getEloWinProbability(contestants.content[i], rating) from the result.
+ */
 function getSeed(contestants, rating) {
   if (rating in contestants.memSeed) {
     return contestants.memSeed[rating];
@@ -16,6 +23,10 @@ function getSeed(contestants, rating) {
   return result;
 }
 
+/**
+ * Given rank, return the rating r such that the expected rank of the user is rank
+ * when they have rating = r instead of realRating.
+ */
 function getRatingToRank(contestants, realRating, rank) {
   var left = 1;
   var right = 8000;
@@ -30,16 +41,27 @@ function getRatingToRank(contestants, realRating, rank) {
   return left;
 }
 
+/**
+ * Assume contestants are sorted by increasing rank, reassign the rank such that if
+ * there are multiple people with equal rank, the largest one will be chosen.
+ *
+ * Ranks start from 1.
+ *
+ * Example: (list of ranks)
+ *
+ * Input: [1, 1, 3, 4, 5, 6, 6]
+ * Output: [2, 2, 3, 4, 5, 7, 7]
+ */
 function reassignRanks(contestants) {
   var first  = 0;
-  var points = contestants.content[0].rank;
+  var rank = contestants.content[0].rank;
   for (var i = 1; i < contestants.content.length; i++) {
-    if (contestants.content[i].rank > points) {
+    if (contestants.content[i].rank > rank) {
       for (var j = first; j < i; j++) {
         contestants.content[j].rank = i;
       }
       first = i;
-      points = contestants.content[i].rank;
+      rank = contestants.content[i].rank;
     }
   }
   for (var i = first; i < contestants.content.length; i++) {
