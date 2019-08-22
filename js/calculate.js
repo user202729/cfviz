@@ -72,7 +72,6 @@ function process(contestants) {
     for (var i = 0; i < contestants.content.length; i++) {
       contestants.content[i].delta += inc;
     }
-    console.log(inc);
   }
 
 
@@ -85,7 +84,6 @@ function process(contestants) {
   for (var i = 0; i < contestants.content.length; i++) {
     contestants.content[i].delta += inc;
   }
-  console.log(inc);
 }
 
 
